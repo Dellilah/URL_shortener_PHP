@@ -27,11 +27,24 @@
 		
 		if(insert_data($sql, 'Url', $site['data'], $pattern)){
 			$site['content'] = 'result';
+			$site['data']['existing'] = download_data($sql, 'Url', array('*'));
 		}
 		else{
+			$site['errors'] = 'Saving data failed';
 			$site['content'] = 'form';
 		}
 	}
+	
+	elseif(isset($_GET['u'])){
+		if($url = current(current(download_data($sql, 'Url', array('long_url'), array('short_url' => $_GET['u']))))){
+			header("Location: ".$url); 		}
+		else{
+			
+			$site['errors'] = 'Unknown adress';
+			$site['content'] = 'form';
+		}	
+	}
+	
 	else{
 		$site['content'] = 'form';
 
