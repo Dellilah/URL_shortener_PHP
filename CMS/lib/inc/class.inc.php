@@ -10,13 +10,21 @@
 	
 	class Url
 	{
-		$long_url;
-		$short_url;
-		$riderections = 0;
+		public $long_url;
+		public $short_url;
+		private $riderections = 0;
 		
 		function Shorten($url){
 			$this->long_url = $url;
-			$this->short_url ='id=2';
+			
+			$chars = str_split('abcdefgijklmnopqrstqxyzABCDEGHIJKLMNOPQRSTUWXYZ1234567890');
+			
+			$random_string = '';
+			for($i=0;$i<6;$i++){
+				$random_string .= $chars[rand(0, count($chars))];
+			}
+			
+			$this->short_url = $random_string;
 		}
 		
 	}
