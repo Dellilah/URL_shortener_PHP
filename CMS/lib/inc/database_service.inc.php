@@ -99,7 +99,7 @@
 			$query = select_query($table, $fields, $conditions, $options);
 			
 			if(!($result = database_query($query))){
-				$database['errors'] = "Nie mo¿na pobraæ danych z bazy";
+				$database['errors'] = "Selecting data failed";
 				return false;
 			}
 			else{
@@ -127,8 +127,6 @@
 	*/
 	
 	function insert_query($table, $pattern, &$data){
-		
-		$data = prepare_data($data);
 		
 		foreach($pattern as $field){
 			if(isset($data[$field])){	

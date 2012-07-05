@@ -13,7 +13,13 @@
 		
 		$url = new Url();
 		
-		$url->Shorten($_POST['long_url']);
+		//shortening with uniqueness checking
+		do{
+			$url->Shorten($_POST['long_url']);
+			$is_unique = count(download_data($sql, 'Url', array('*'), array('short_url' => ($url->short_url))));
+		}
+		while($is_unique > 0);
+		
 		$site['data']['long_url'] = $url->long_url;
 		$site['data']['short_url'] = $url->short_url;
 		

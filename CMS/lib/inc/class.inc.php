@@ -21,7 +21,7 @@
 			
 			$random_string = '';
 			for($i=0;$i<6;$i++){
-				$random_string .= $chars[rand(0, count($chars))];
+				$random_string .= $chars[rand(0, count($chars)-1)];
 			}
 			
 			$this->short_url = $random_string;
