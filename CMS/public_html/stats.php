@@ -12,9 +12,10 @@
 	if(isset($_POST['short_url'])){
 		$site['whole_url'] = $_POST['short_url'];
 		$part_url = substr($site['whole_url'], -6, 6);
-		$site['url'] = current(download_data($sql, 'Url', array('*'), array('short_url' => $part_url)));
+		$site['url'] = download_data($sql, 'Url', array('*'), array('short_url' => $part_url));
 		
-		if(count($site['url'])){
+		if(count($site['url']) && count($site['url']) > 0){
+			$site['url'] = current($site['url']);
 			$site['content'] = 'stats_result';
 		}
 		else{
