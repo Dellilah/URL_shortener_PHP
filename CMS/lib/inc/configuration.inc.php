@@ -16,6 +16,6 @@
 	
 	// configuration of database 
     $sql['host'] = 'localhost';
-    $sql['user'] = 'root';
-    $sql['password'] = 'jaron13';
-    $sql['database'] = 'url_shortener';
+    $sql['user'] = 'user';
+    $sql['password'] = 'password';
+    $sql['database'] = 'password';
