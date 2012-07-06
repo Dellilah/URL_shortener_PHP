@@ -34,10 +34,16 @@
 			$site['content'] = 'form';
 		}
 	}
+
 	
 	elseif(isset($_GET['u'])){
-		if($url = current(current(download_data($sql, 'Url', array('long_url'), array('short_url' => $_GET['u']))))){
-			header("Location: ".$url); 		}
+		if($url = current(download_data($sql, 'Url', array('*'), array('short_url' => $_GET['u'])))){
+			
+			$new['redirections'] = $url['redirections']+1;
+			update_data($sql, 'Url', $new, array('redirections'), array('idUrl' => $url['idUrl']));
+
+			header("Location: ".$url['long_url']); 		
+		}
 		else{
 			
 			$site['errors'] = 'Unknown adress';

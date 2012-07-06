@@ -116,6 +116,33 @@
 		}
 	}
 	
+		/**
+	* Update content of the table
+	*
+	* @param array $database array of connection data
+	* @param string $table name of the destination table
+	* @param array $data data to update
+	* @param array $pattern pattern of fields
+	* @param string $conditions Conditions
+	* @return boolean Result
+	*/
+	
+	function update_data(&$database, $table, $data, $pattern, $conditions){
+		
+		if($connect = database_connect($database)){
+			
+			$query = update_query($table, $pattern, $data, $conditions);
+			if(database_query($query)){
+				return true;
+			}
+			else return false;
+		}
+		else{
+			return false;
+		}
+	}
+	
+		
 	/**
 	* CREATE INSERT query
 	*
@@ -208,6 +235,44 @@
 			$query = $query.' '.$options;
 		}
 		
+		return $query;
+		
+	}
+	
+	/**
+	*	Create UPDATE query
+	*
+	* @param string $table Name of the source table
+	* @param array $fields Pattern of the fields
+	* @param array $new_values Data to insert
+	* @param array $conditions conditions
+	* 
+	* @return string update query
+	*/
+	
+	function update_query($table, $fields, $new_values, $conditions){
+		
+		foreach($fields as $field){
+			if(isset($new_values[$field])){
+				if(!isset($query_set)){
+					$query_set = ' SET '.$field.'=\''.$new_values[$field].'\'';
+				}
+				else{
+					$query_set = $query_set.', '.$field.'=\''.$new_values[$field].'\'';
+				}
+			}
+		}
+		
+		foreach($conditions as $key => $value){
+				if(isset($query_conditions)){
+					$query_conditions = $query_conditions.' AND '.$key.' = \''.$value.'\'';
+				}
+				else{
+					$query_conditions =' WHERE '.$key.' = \''.$value.'\'';
+				}
+		}
+		
+		$query = 'UPDATE '.$table.$query_set.$query_conditions;
 		return $query;
 		
 	}
